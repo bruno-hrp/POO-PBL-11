@@ -6,7 +6,7 @@ public class Fornecedor implements Validador, Calculavel {
     //Métodos
     @Override
     public boolean validar() {
-
+        cnpj;
     }
 
     @Override
