@@ -1,0 +1,71 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' Definição das Interfaces
+interface Validador {
+  + validar() : boolean
+}
+
+interface Calculavel {
+  + calcular() : double
+}
+
+interface Auditavel {
+  + auditar() : void
+}
+
+interface Relatavel {
+  + gerarRelatorio() : void
+}
+
+' Definição das Classes
+class ContratoPublico {
+  - valorTotal : double
+  - valorPago : double
+  - fornecedor : Fornecedor
+  - notasFiscais : List<NotaFiscal>
+  + validar() : boolean
+  + calcular() : double
+}
+
+class Fornecedor {
+  - cnpj : String
+  - dadosCompletos : boolean
+  + validar() : boolean
+  + calcular() : double
+}
+
+class NotaFiscal {
+  - valor : double
+  - consistente : boolean
+  + validar() : boolean
+}
+
+class Auditoria {
+  - contratos : List<ContratoPublico>
+  + auditar() : void
+}
+
+class RelatorioIrregularidade {
+  - falhas : List<String>
+  + gerarRelatorio() : void
+}
+
+' Relacionamentos e Implementações
+ContratoPublico ..|> Validador
+ContratoPublico ..|> Calculavel
+
+Fornecedor ..|> Validador
+Fornecedor ..|> Calculavel
+
+NotaFiscal ..|> Validador
+
+Auditoria ..|> Auditavel
+RelatorioIrregularidade ..|> Relatavel
+
+ContratoPublico "1" *-- "1" Fornecedor : possui >
+ContratoPublico "1" *-- "0..*" NotaFiscal : contem >
+Auditoria "1" o-- "0..*" ContratoPublico : analisa >
+Auditoria ..> RelatorioIrregularidade : cria >
+
+@enduml

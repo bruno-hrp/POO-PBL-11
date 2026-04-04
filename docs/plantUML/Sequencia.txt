@@ -1,0 +1,38 @@
+@startuml
+actor Auditor
+participant "a: Auditoria" as Aud
+participant "c: ContratoPublico" as Contrato
+participant "r: RelatorioIrregularidade" as Relatorio
+
+Aud -> Aud : iniciar()
+activate Aud
+
+Aud -> Aud : auditar()
+loop Para cada Contrato Público
+    
+    Aud -> Contrato : validar()
+    activate Contrato
+    Contrato --> Aud : true / false / Exception
+    deactivate Contrato
+    
+    Aud -> Contrato : calcular() (Ex: % Execução)
+    activate Contrato
+    alt Sucesso
+        Contrato --> Aud : percentual (double)
+    else Exceção (ex: Divisão por Zero)
+        Contrato --> Aud : throw Exception
+        note right of Aud: catch (Exception e)\nRegistrar log da falha
+    end
+    deactivate Contrato
+    
+    note over Aud: finally\nAssegurar continuidade e fechar recursos locais
+end
+
+Aud -> Relatorio : gerarRelatorio()
+activate Relatorio
+Relatorio --> Aud : Relatório Consolidado
+deactivate Relatorio
+
+Aud --> Auditor : Processo Finalizado
+deactivate Aud
+@enduml
