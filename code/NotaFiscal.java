@@ -20,8 +20,9 @@ public class NotaFiscal implements Validador {
     } finally {
         System.out.println("Validação NF finalizada.");
     }
-
 }
+
+
 
     //Construtor
     public NotaFiscal(double valor, boolean consistente) {
