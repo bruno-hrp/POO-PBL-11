@@ -8,7 +8,7 @@ public class Fornecedor implements Validador, Calculavel {
     public boolean validar() {
     try {
         if (cnpj == null) {
-            throw new NullPointerException("Nome inválido");
+            throw new NullPointerException("Cnpj inválido");
         }
 
         return true;
