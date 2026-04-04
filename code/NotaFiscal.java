@@ -7,6 +7,30 @@ public class NotaFiscal implements Validador {
     @Override
     public boolean validar() {
 
+        try {
+        if (valorTotal == null) {
+            throw new NullPointerException("Valor total nulo");
+        }
+
+        if (valorTotal <= 0) {
+            throw new ArithmeticException("Valor total inválido");
+        }
+
+        return true;
+
+    } catch (NullPointerException e) {
+        System.out.println("Erro: " + e.getMessage());
+        return false;
+
+    } catch (ArithmeticException e) {
+        System.out.println("Erro: " + e.getMessage());
+        return false;
+
+    } finally {
+        System.out.println("Validação do contrato finalizada.");
+    }
+}
+
     }
 
     //Construtor
