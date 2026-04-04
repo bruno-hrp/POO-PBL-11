@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class ContratoPublico implements Validr, Calculavel {
+public class ContratoPublico implements Validar, Calculavel {
     
     //Atributos
     private String descricao;
