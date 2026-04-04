@@ -11,6 +11,10 @@ public class NotaFiscal implements Validador {
             throw new ArithmeticException("Valor negativo");
         }
 
+        if (valor == 0) {
+            throw new ArithmeticException("Valor inexistente");
+        }
+
         return true;
 
     } catch (ArithmeticException e) {
