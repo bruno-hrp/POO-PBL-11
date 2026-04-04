@@ -6,7 +6,22 @@ public class Fornecedor implements Validador, Calculavel {
     //Métodos
     @Override
     public boolean validar() {
-        cnpj;
+        public boolean validar() {
+    try {
+        if (nome == null) {
+            throw new NullPointerException("Nome inválido");
+        }
+
+        return true;
+
+    } catch (Exception e) {
+        System.out.println("Erro fornecedor: " + e.getMessage());
+        return false;
+
+    } finally {
+        System.out.println("Validação fornecedor finalizada.");
+    }
+}
     }
 
     @Override
