@@ -23,7 +23,7 @@ public class ContratoPublico implements Validador, Calculavel {
             }
 
             return true; //Se não, os dados são validados.
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println("Erro na validação do contrato (" + this.descricao + "): " + e.getMessage());
             return false; 
         } finally {
