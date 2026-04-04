@@ -1,0 +1,36 @@
+@startuml
+start
+
+:Iniciar Auditoria;
+:Carregar Lista de Contratos;
+
+while (Existem contratos não processados?) is (Sim)
+  :Pegar próximo contrato;
+  
+  partition "Bloco Try-Catch-Finally" {
+    :try {;
+    :  Validar Contrato;
+    :  Calcular % de Execução;
+    :  Cruzar Dados com Fornecedor e Notas;
+    
+    if (Ocorreu algum erro/exceção?) then (Sim, ex: NullPointer, ArithmeticException)
+      :catch (Exception e) {;
+      :  Registrar tipo de falha no Relatório;
+      :  Marcar contrato como "Com Inconsistência";
+      :}
+    else (Não)
+      :  Marcar contrato como "Auditado com Sucesso";
+    endif
+    
+    :finally {;
+    :  Gravar log de finalização do item;
+    :  Limpar variáveis temporárias;
+    :}
+  }
+endwhile (Não)
+
+:Gerar Relatório de Irregularidades (Relatavel);
+:Exibir Resultados Consolidados;
+
+stop
+@enduml

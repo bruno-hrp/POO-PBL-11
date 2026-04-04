@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+actor "Sistema / Auditor" as Auditor
+
+rectangle "Sistema de Auditoria de Contratos" {
+  usecase "Realizar Auditoria" as UC1
+  usecase "Validar Contratos e Notas" as UC2
+  usecase "Calcular Indicadores (Ex: % Execução)" as UC3
+  usecase "Gerar Relatório de Irregularidades" as UC4
+  usecase "Registrar Falhas (Try-Catch)" as UC5
+}
+
+Auditor --> UC1
+UC1 ..> UC2 : <<include>>
+UC1 ..> UC3 : <<include>>
+UC1 ..> UC4 : <<include>>
+UC2 ..> UC5 : <<extend>> (Em caso de erro)
+UC3 ..> UC5 : <<extend>> (Em caso de erro)
+
+@enduml
