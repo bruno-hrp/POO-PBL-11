@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class ContratoPublico implements Validador, Calculavel {
+public class ContratoPublico implements Validr, Calculavel {
     
     //Atributos
     private String descricao;
@@ -8,6 +8,7 @@ public class ContratoPublico implements Validador, Calculavel {
     private double valorPago;
     private Fornecedor fornecedor;
     private List<NotaFiscal> notasFiscais;
+    private int testedepullrequest;
 
     //Métodos
     @Override
