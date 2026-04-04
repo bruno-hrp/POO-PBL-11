@@ -8,7 +8,6 @@ public class ContratoPublico implements Validr, Calculavel {
     private double valorPago;
     private Fornecedor fornecedor;
     private List<NotaFiscal> notasFiscais;
-    private int testedepullrequest;
 
     //Métodos
     @Override
