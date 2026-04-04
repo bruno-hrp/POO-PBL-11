@@ -26,8 +26,6 @@ public class NotaFiscal implements Validador {
     }
 }
 
-
-
     //Construtor
     public NotaFiscal(double valor, boolean consistente) {
         this.valor = valor;
