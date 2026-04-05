@@ -11,6 +11,7 @@ public class RelatorioIrregularidade implements Relatavel {
         this.falhas = new ArrayList<>();
     }
 
+    @SuppressWarnings("UseSpecificCatch")
     public void registrarFalha(String descricaoFalha) {
         try {
             if (descricaoFalha == null || descricaoFalha.trim().isEmpty()) {
@@ -24,6 +25,7 @@ public class RelatorioIrregularidade implements Relatavel {
     }
 
     @Override
+    @SuppressWarnings("UseSpecificCatch")
     public void gerarRelatorio() {
         try {
             System.out.println("\n===========================================");

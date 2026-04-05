@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContratoPublico implements Validador, Calculavel {
@@ -22,6 +23,20 @@ public class ContratoPublico implements Validador, Calculavel {
                 throw new IllegalArgumentException("Falha: Valores financeiros negativos.");
             }
 
+            for (NotaFiscal nf : notasFiscais) {
+                if (notasFiscais == null) {
+                    throw new NullPointerException("Lista de notas fiscais nula");
+                }
+                
+                try {
+                    if (!nf.validar()) {
+                        System.out.println("Nota fiscal inválida");
+             }
+            } catch (Exception e) {
+                System.out.println("Erro ao validar nota fiscal: " + e.getMessage());
+                }
+           }
+
             return true; //Se não, os dados são validados.
         } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println("Erro na validação do contrato (" + this.descricao + "): " + e.getMessage());
@@ -32,35 +47,73 @@ public class ContratoPublico implements Validador, Calculavel {
     }
 
     @Override
-    public double calcular() {
-        try {
-            if(this.valorTotal == 0) {
-                throw new ArithmeticException("Divisão por zero: O valor total do contrato é 0.");
-            }
-
-            double percentual = (this.valorPago/this.valorTotal)*100;
-            return percentual;
-
-        } catch (ArithmeticException e) { //Erro matemático
-            System.out.println("Erro matemático no contrato (" + this.descricao + "): " + e.getMessage());
-            return -1.0;
-        } catch (Exception e) {
-            System.out.println("Erro inesperado ao calcular execução: " + e.getMessage());
-            return -1.0;    
-        } finally {
-            System.out.println("- Cálculo de percentual de execução finalizado.");
+    @SuppressWarnings("UseSpecificCatch")
+public double calcular() {
+    try {
+        if (this.valorTotal == 0) {
+            throw new ArithmeticException("Divisão por zero: valor total é 0.");
         }
-    }    
+
+        if (notasFiscais == null) {
+            throw new NullPointerException("Lista de notas fiscais nula");
+        }
+
+        double somaNotas = 0;
+
+        for (NotaFiscal nf : notasFiscais) {
+            try {
+                if (nf == null) {
+                    throw new NullPointerException("Nota fiscal nula");
+                }
+
+                somaNotas += nf.getValor();
+
+            } catch (Exception e) {
+                System.out.println("Erro ao processar nota: " + e.getMessage());
+            }
+        }
+
+        if (Math.abs(somaNotas - valorPago) > 0.01) {
+            System.out.println("Aviso: soma das notas diferente do valor pago");
+        }
+
+        double percentual = (valorPago / valorTotal) * 100;
+        return percentual;
+
+    } catch (ArithmeticException e) {
+        System.out.println("Erro matemático: " + e.getMessage());
+        return -1.0;
+
+    } catch (Exception e) {
+        System.out.println("Erro geral: " + e.getMessage());
+        return -1.0;
+
+    } finally {
+        System.out.println("- Cálculo finalizado para contrato " + descricao);
+    }
+}
+    
+    public void adicionarNotaFiscal(NotaFiscal nota) {
+    try {
+        if (nota == null) {
+            throw new NullPointerException("Nota fiscal nula");
+        }
+
+        notasFiscais.add(nota);
+
+    } catch (NullPointerException e) {
+        System.out.println("Erro ao adicionar nota: " + e.getMessage());
+    }
+}
 
     //Construtor
-    public ContratoPublico(String descricao, double valorTotal, double valorPago, Fornecedor fornecedor, List<NotaFiscal> notasFiscais) {
-        this.descricao = descricao;
-        this.valorTotal = valorTotal;
-        this.valorPago = valorPago;
-        this.fornecedor = fornecedor;
-        this.notasFiscais = notasFiscais;
-    }
-
+    public ContratoPublico(String descricao, double valorTotal, double valorPago, Fornecedor fornecedor) {
+    this.descricao = descricao;
+    this.valorTotal = valorTotal;
+    this.valorPago = valorPago;
+    this.fornecedor = fornecedor;
+    this.notasFiscais = new ArrayList<>();
+}
     //Getters e setters
     public String getDescricao() {
         return descricao;
