@@ -6,13 +6,21 @@ public class NotaFiscal implements Validador {
     //Métodos
     @Override
     public boolean validar() {
-    try {
-        if (valor < 0) {
-            throw new ArithmeticException("Valor negativo");
+        try {
+            if (Double.isNaN(valor)) {
+                throw new Exception("Valor inválido (NaN)");
         }
 
-        if (valor == 0) {
-            throw new ArithmeticException("Valor inexistente");
+            if (valor < 0) {
+                throw new ArithmeticException("Valor negativo");
+        }
+
+            if (valor == 0) {
+                throw new ArithmeticException("Valor inexistente");
+        }
+
+            if (!consistente) {
+                throw new Exception("Nota fiscal inconsistente");
         }
 
         return true;
@@ -21,10 +29,13 @@ public class NotaFiscal implements Validador {
         System.out.println("Erro nota fiscal: " + e.getMessage());
         return false;
 
+    } catch (Exception e) {
+        System.out.println("Erro geral nota fiscal: " + e.getMessage());
+        return false;
+
     } finally {
         System.out.println("Validação NF finalizada.");
     }
-}
 
     //Construtor
     public NotaFiscal(double valor, boolean consistente) {
