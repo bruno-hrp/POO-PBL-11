@@ -16,9 +16,6 @@ public class Auditoria implements Auditavel {
                     throw new NullPointerException("Lista de contratos nula");
     }
 
-    System.out.println("- Iniciando auditoria...");
-    System.out.println("Total de contratos a analisar: " + contratos.size());
-
                 System.out.println("\n - Analisando contrato: " + contrato.getDescricao() + ".");
 
                 boolean isValido = contrato.validar();
@@ -30,9 +27,9 @@ public class Auditoria implements Auditavel {
                     System.out.println("Auditoria apontou irregularidades neste contrato.");
                 }
             } catch (NullPointerException e) {
-                System.out.println("Falha de acesso." + e.getMessage());  
+                System.out.println("Falha de acesso: " + e.getMessage()); 
             } catch (Exception e) {
-                System.out.println("Falha inesperada." + e.getMessage());
+                System.out.println("Falha inesperada: " + e.getMessage());
             } finally {
                 System.out.println("- Item analisado. Avançando...");
             }
