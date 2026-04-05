@@ -6,37 +6,51 @@ public class Auditoria implements Auditavel {
 
     //Métodos
     @Override
-    public void auditar() {
+    @SuppressWarnings("UseSpecificCatch")
+public void auditar() {
+    try {
+        if (contratos == null) {
+            throw new NullPointerException("Lista de contratos nula");
+        }
+
         System.out.println("- Iniciando auditoria...");
         System.out.println("Total de contratos a analisar: " + contratos.size());
 
-        for(ContratoPublico contrato : contratos) {
-           try {
-                if (contratos == null) {
-                    throw new NullPointerException("Lista de contratos nula");
-    }
+        for (ContratoPublico contrato : contratos) {
+            try {
+                if (contrato == null) {
+                    throw new NullPointerException("Contrato nulo");
+                }
 
                 System.out.println("\n - Analisando contrato: " + contrato.getDescricao() + ".");
 
                 boolean isValido = contrato.validar();
                 double percentual = contrato.calcular();
 
-                if(isValido && percentual != -1.0) {
+                if (isValido && percentual != -1.0) {
                     System.out.println("Auditoria concluída.");
                 } else {
                     System.out.println("Auditoria apontou irregularidades neste contrato.");
                 }
+
             } catch (NullPointerException e) {
-                System.out.println("Falha de acesso: " + e.getMessage()); 
+                System.out.println("Falha de acesso: " + e.getMessage());
+
             } catch (Exception e) {
                 System.out.println("Falha inesperada: " + e.getMessage());
+
             } finally {
                 System.out.println("- Item analisado. Avançando...");
             }
         }
 
+    } catch (Exception e) {
+        System.out.println("Erro geral na auditoria: " + e.getMessage());
+
+    } finally {
         System.out.println("- Auditoria encerrada.");
     }
+}
 
     //Construtor
     public Auditoria(List<ContratoPublico> contratos) {
