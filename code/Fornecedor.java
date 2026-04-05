@@ -8,6 +8,9 @@ public class Fornecedor implements Validador, Calculavel {
     private String nome;
     private List<ContratoPublico> contratos;
 
+    public Fornecedor() {
+    }
+
     //Métodos
     @Override
 public boolean validar() {
