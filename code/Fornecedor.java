@@ -40,11 +40,15 @@ public boolean validar() {
     }
 }
 
-    @Override
+@Override
 public double calcular() {
     try {
-        if (contratos == null || contratos.isEmpty()) {
-            throw new NullPointerException("Sem contratos");
+        if (contratos == null) {
+            throw new NullPointerException("Lista de contratos nula");
+        }
+
+        if (contratos.isEmpty()) {
+            throw new ArithmeticException("Sem contratos para calcular risco");
         }
 
         double risco = 0;
@@ -52,25 +56,39 @@ public double calcular() {
         for (ContratoPublico c : contratos) {
             try {
                 if (!c.validar()) {
-                    risco += 1; // contrato problemático aumenta risco
+                    risco += 1;
                 }
             } catch (Exception e) {
-                System.out.println("Erro ao avaliar contrato");
+                System.out.println("Erro ao avaliar contrato: " + e.getMessage());
                 risco += 1;
             }
         }
 
         return risco / contratos.size();
 
+    } catch (ArithmeticException e) {
+        System.out.println("Erro matemático: " + e.getMessage());
+        return 0;
+
     } catch (NullPointerException e) {
         System.out.println("Erro no cálculo de risco: " + e.getMessage());
+        return 0;
+
+    } catch (Exception e) {
+        System.out.println("Erro inesperado no cálculo: " + e.getMessage());
         return 0;
 
     } finally {
         System.out.println("Cálculo de risco finalizado.");
     }
 }
-    
+    public void adicionarContrato(ContratoPublico contrato) {
+    try {
+        contratos.add(contrato);
+    } catch (Exception e) {
+        System.out.println("Erro ao adicionar contrato: " + e.getMessage());
+    }
+}
 
     //Construtor
     public Fornecedor(String cnpj, boolean dadosCompletos, String nome) {
@@ -83,6 +101,10 @@ public double calcular() {
     //Getters e setters
     public String getCnpj() {
         return cnpj;
+    }
+
+    public List<ContratoPublico> getContratos() {
+    return contratos;
     }
 
     public void setCnpj(String cnpj) {
