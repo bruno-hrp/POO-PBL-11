@@ -11,10 +11,13 @@ public class Auditoria implements Auditavel {
         System.out.println("Total de contratos a analisar: " + contratos.size());
 
         for(ContratoPublico contrato : contratos) {
-            try {
-                if(contrato == null) { //Contrato não existente
-                    throw new NullPointerException("O contrato não existe na lista.");
-                }
+           try {
+                if (contratos == null) {
+                    throw new NullPointerException("Lista de contratos nula");
+    }
+
+    System.out.println("- Iniciando auditoria...");
+    System.out.println("Total de contratos a analisar: " + contratos.size());
 
                 System.out.println("\n - Analisando contrato: " + contrato.getDescricao() + ".");
 
