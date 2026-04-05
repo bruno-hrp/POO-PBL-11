@@ -115,6 +115,7 @@ public double calcular() {
     this.notasFiscais = new ArrayList<>();
 }
 
+
     //Getters e setters
     public String getDescricao() {
         return descricao;
