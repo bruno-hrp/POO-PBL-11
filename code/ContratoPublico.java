@@ -114,6 +114,10 @@ public double calcular() {
     this.fornecedor = fornecedor;
     this.notasFiscais = new ArrayList<>();
 }
+    public ContratoPublico(String descricao2, int valorTotal2, int valorPago2, Fornecedor f1, NotaFiscal nf1) {
+        //TODO Auto-generated constructor stub
+    }
+
     //Getters e setters
     public String getDescricao() {
         return descricao;
