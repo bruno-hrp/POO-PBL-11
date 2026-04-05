@@ -34,7 +34,7 @@ public class NotaFiscal implements Validador {
         return false;
 
     } finally {
-        System.out.println("Validação NF finalizada.");
+        System.out.println("[NF] Validação finalizada - valor: " + valor);
     }
     }
 
